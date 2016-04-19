@@ -16,9 +16,9 @@ class Config
 
     private static $config = [
         'mysql' => [
-            'db_name' => 'twa-zad4',
-            'user'    => 'root',
-            'pass'    => '',
+            'db_name' => 'twa-zad7',
+            'user'    => 'twa-zad7',
+            'pass'    => '2x8mDFTCzDNeDs2K',
             'charset' => 'utf8',
         ],
         'app'   => [

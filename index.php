@@ -19,6 +19,8 @@ $router->map( 'GET', '/page/[i:id]', function($id) {
 //    require __DIR__ . '/views/user-details.php';
 //});
 
+$router->setBasePath(Config::get('app.base_app'));
+
 // match current request url
 $match = $router->match();
 

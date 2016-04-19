@@ -23,7 +23,7 @@ class Config
         ],
         'app'   => [
             'base_url' => 'http://twa-zad7',
-            'dir_view' => ROOT.'views',
+            'dir_view' => 'views',
         ],
         'menu' => [
             'items' => [

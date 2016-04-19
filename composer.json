@@ -1,0 +1,14 @@
+{
+    "autoload": {
+        "psr-0": {
+            "MyApp": "src"
+        },
+        "classmap": ["src/"]
+    },
+    "require": {
+        "twbs/bootstrap": "^3.3",
+        "nesbot/carbon": "1.21.0",
+        "dibi/dibi": "^3.0",
+        "altorouter/altorouter": "1.1.0"
+    }
+}

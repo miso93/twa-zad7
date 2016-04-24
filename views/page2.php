@@ -7,6 +7,10 @@
  */
 
 Classes\View::get('template.header');
+
+$user_ip = app()->get_user_IP();
+app()->init_geo_plugin();
+
 ?>
 
     <div class="row">
@@ -21,7 +25,23 @@ Classes\View::get('template.header');
                 <tbody>
                 <tr>
                     <td>IP</td>
-                    <td><?php echo getRealIp() ?></td>
+                    <td><?php echo $user_ip ?></td>
+                </tr>
+                <tr>
+                    <td>GPS</td>
+                    <td><?php echo (($location = app()->parseLocation()) ? "[".$location['lat'].", ".$location['long']. "]" : 'App can\'t get location' ) ?></td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td><?php echo (($cityName = app()->getCityName()) ? $cityName : "mesto sa nedá lokalizovať alebo sa nachádzate na vidieku")?></td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td><?php echo (($countryName = app()->getCountryName()) ? $countryName : "stat sa nedá lokalizovať alebo sa nachádzate na vidieku")?></td>
+                </tr>
+                <tr>
+                    <td>Capital city</td>
+                    <td><?php echo (($capitalCityName = app()->getCapitalCity()) ? $capitalCityName : "hlavne mesto sa nedá lokalizovať alebo sa nachádzate na vidieku")?></td>
                 </tr>
                 </tbody>
             </table>
@@ -29,52 +49,7 @@ Classes\View::get('template.header');
     </div>
 <?php
 
-$geoplugin = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $_SERVER['REMOTE_ADDR']));
-
-var_dump($geoplugin);
-
-if (is_numeric($geoplugin['geoplugin_latitude']) && is_numeric($geoplugin['geoplugin_longitude'])) {
-
-    $lat = $geoplugin['geoplugin_latitude'];
-    $long = $geoplugin['geoplugin_longitude'];
-    var_dump($lat);
-    var_dump($long);
-
-    //set farenheight for US
-    if ($geoplugin['geoplugin_countryCode'] == 'US') {
-        $tempScale = 'fahrenheit';
-        $tempUnit = '&deg;F';
-    } else {
-        $tempScale = 'celsius';
-        $tempUnit = '&deg;C';
-    }
-//    require_once('ParseXml.class.php');
-
-//    $xml = new ParseXml();
-//    $xml->LoadRemote("http://api.wunderground.com/auto/wui/geo/ForecastXML/index.xml?query={$lat},{$long}", 3);
-//    $dataArray = $xml->ToArray();
-//
-//    $html = "<center><h2>Weather forecast for " . $geoplugin['geoplugin_city'];
-//    $html .= "</h2><table cellpadding=5 cellspacing=10><tr>";
-//
-//    foreach ($dataArray['simpleforecast']['forecastday'] as $arr) {
-//
-//        $html .= "<td align='center'>" . $arr['date']['weekday'] . "<br />";
-//        $html .= "<img src='http://icons-pe.wxug.com/i/c/a/" . $arr['icon'] . ".gif' border=0 /><br />";
-//        $html .= "<font color='red'>" . $arr['high'][$tempScale] . $tempUnit . " </font>";
-//        $html .= "<font color='blue'>" . $arr['low'][$tempScale] . $tempUnit . "</font>";
-//        $html .= "</td>";
-//
-//
-//    }
-//    $html .= "</tr></table>";
-
-//    echo $html;
-}
-
 ?>
-    ?>
-
 
 <?php
 Classes\View::get('template.footer');

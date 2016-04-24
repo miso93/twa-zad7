@@ -22,6 +22,7 @@ class Config
             'charset' => 'utf8',
         ],
         'app'   => [
+            'env' => 'local',
             'base_url' => 'http://twa-zad7',
             'dir_view' => 'views',
             'base_app' => ''

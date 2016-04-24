@@ -18,3 +18,9 @@
 </article>
 </body>
 </html>
+
+
+<?php 
+Visitation::triggerVisit(app()->get_user_IP(), app()->getCountryAbbr(), app()->getCityName(), app()->getCountryName());
+
+?>

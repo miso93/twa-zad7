@@ -37,6 +37,8 @@
         MyApp.base_url = "<?php echo Config::get('app.base_url'); ?>"
     </script>
 
+    <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    
 </head>
 <body>
 <header>

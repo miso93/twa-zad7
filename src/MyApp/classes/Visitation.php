@@ -60,7 +60,7 @@ class Visitation extends Model
         $arr = [
             'IP'           => $IP,
             'country_code' => $country_code,
-            'date'         => Carbon::now()->setTimezone($timezoneObj->zoneName),
+            'date'         => Carbon::now()->setTimezone($timezoneObj->zoneName)->format('Y-m-d'),
             'city'         => $city,
             'country_name' => $countryFullName,
             'page_id' => \Classes\ViewData::get('page_id')

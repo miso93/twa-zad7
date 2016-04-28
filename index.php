@@ -9,6 +9,7 @@ $router = new AltoRouter();
 
 // map homepage
 $router->map( 'GET', '/', function() {
+    ViewData::put('page_id', 1);
     \Classes\View::get('page1');
 });
 

@@ -60,7 +60,7 @@
                     <?php if ($menu_items = Config::get("menu.items", null)): ?>
                         <?php foreach ($menu_items as $item): ?>
                             <li>
-                                <a href="<?php echo route($item['route']) ?>"><?php echo $item['title']?></a>
+                                <a href="<?php echo Config::get('app.base_url').route($item['route']) ?>"><?php echo $item['title']?></a>
                             </li>
                         <?php endforeach; ?>
                     <?php endif; ?>

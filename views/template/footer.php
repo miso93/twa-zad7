@@ -20,7 +20,12 @@
 </html>
 
 
-<?php 
-Visitation::triggerVisit(app()->get_user_IP(), app()->getCountryAbbr(), app()->getCityName(), app()->getCountryName());
+<?php
+app()->get_user_IP();
+app()->init_geo_plugin();
+app()->parseLocation();
+app()->initGoogleGeocode();
+app()->initWorldBankApi();
+Visitation::triggerVisit(app()->getLocationString(),app()->get_user_IP(), app()->getCountryAbbr(), app()->getCityName(), app()->getCountryName());
 
 ?>

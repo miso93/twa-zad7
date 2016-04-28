@@ -25,7 +25,7 @@ class Config
             'env' => 'local',
             'base_url' => 'http://twa-zad7',
             'dir_view' => 'views',
-            'base_app' => ''
+            'base_app' => '' ///twa-zad7
         ],
         'menu' => [
             'items' => [

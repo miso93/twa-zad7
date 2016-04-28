@@ -8,3 +8,8 @@ pre {
 body > article {
     margin-top: 60px;
 }
+
+.max-30 {
+    max-width: 30px;
+    height: auto;
+}

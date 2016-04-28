@@ -33,15 +33,39 @@ class Visitation extends Model
         }
     }
 
-    public static function triggerVisit($IP, $country_code, $city, $countryFullName)
+    public static function fetchAllByCountryCode($country_code)
     {
+        try {
+            $result = dibi::query('SELECT * FROM ' . self::$table . ' WHERE country_code = ?', $country_code);
+
+            $objects = static::toCollection($result->fetchAll());
+            return $objects;
+            
+        } catch (\Dibi\Exception $e) {
+            print $e->getSql();
+        }
+
+        return null;
+    }
+
+    public static function triggerVisit($location, $IP, $country_code, $city, $countryFullName)
+    {
+        $client = new \GuzzleHttp\Client();
+        list($lat, $long) = explode(',', $location);
+
+        $url = "http://api.timezonedb.com/?lat=".$lat."&lng=".$long."&key=8FLKHGJ4LBH2&format=json";
+        $res = $client->request('GET', $url);
+        $timezoneObj = json_decode($res->getBody());
+
         $arr = [
             'IP'           => $IP,
             'country_code' => $country_code,
-            'date'         => Carbon::now()->format('Y-m-d'),
+            'date'         => Carbon::now()->setTimezone($timezoneObj->zoneName),
             'city'         => $city,
-            'country_name' => $countryFullName
+            'country_name' => $countryFullName,
+            'page_id' => \Classes\ViewData::get('page_id')
         ];
+
         $result = dibi::query('SELECT COUNT(*) as count FROM ' . self::$table . ' WHERE IP=? AND date=?', $arr['IP'], $arr['date']);
         if ($result->fetchAll()[0]->count == 0) {
             dibi::query('INSERT INTO ' . self::$table, $arr);

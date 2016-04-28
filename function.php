@@ -99,6 +99,10 @@ class App
         $this->geoplugin_data = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip=' . $this->IP));
     }
 
+    public function getLocationString()
+    {
+        return $this->lat . ",". $this->long;
+    }
     public function parseLocation()
     {
         if (is_numeric($this->geoplugin_data['geoplugin_latitude']) && is_numeric($this->geoplugin_data['geoplugin_longitude'])) {
@@ -125,7 +129,7 @@ class App
         }
     }
 
-    private function initGoogleGeocode()
+    public function initGoogleGeocode()
     {
         $get_API = "http://maps.googleapis.com/maps/api/geocode/json?latlng=";
         $get_API .= round($this->lat, 2) . ",";
@@ -258,7 +262,7 @@ class App
         
         foreach($visitations as $visitation){
             if(isset($result[$visitation->country_code])){
-                $result[$visitation->country_code]['count'] = $result[$visitation->country_code]['count'] + 1;
+                $result[$visitation->country_code]['count'] = ($result[$visitation->country_code]['count'] + 1);
             } else {
                 $result[$visitation->country_code]['country_name'] = $visitation->country_name;
                 $result[$visitation->country_code]['count'] = 1;
@@ -267,6 +271,23 @@ class App
         
         return $result;
     }
+
+    public function getVisitationForCountryWithCode($code)
+    {
+        $visitations = Visitation::fetchAllByCountryCode($code);
+        $result = [];
+
+        foreach($visitations as $visitation){
+            if(isset($result[$visitation->city])){
+                $result[$visitation->city] = ($result[$visitation->city] + 1);
+            } else {
+                $result[$visitation->city] = 1;
+            }
+        }
+
+        return [isset($visitation) ? $visitation->country_name : '' => $result];
+    }
+
 }
 
 class WeatherDay
